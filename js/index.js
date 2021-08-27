@@ -21,7 +21,9 @@ document.addEventListener('DOMContentLoaded', e => {
 
 function cardMaker(user) {
   let userList = document.querySelector('#user-list')
+
   let userItem = document.createElement('li')
+  userItem.id = `${user.login}`
   userItem.style.borderStyle = 'solid'
   let avatar = document.createElement('img')
   avatar.src = `${user.avatar_url}`
@@ -37,13 +39,31 @@ function cardMaker(user) {
   userItem.append(profileLink)
   userList.append(userItem)
   let space = document.createElement('br')
-  userList.append(space) 
+  userList.append(space)
+  userItem.addEventListener('click', e => {
+    fetch(`https://api.github.com/users/${user.login}/repos`)
+    .then(res => res.json())
+    .then(data => repoLister(data))
+  })
 };
 
+function repoLister(data) {
+  data.forEach(repo => {
+    let reposList = document.querySelector('#repos-list')
+    let repoNameContainer = document.createElement('li')
+    let repoName = document.createElement('p')
+    let repoLink = document.createElement('a')
+    repoLink.href = `${repo.full_name}`
+    repoLink.innerText = `${repo.name}`
+    repoName.append(repoLink)
+    repoNameContainer.append(repoName)
+    reposList.append(repoNameContainer)
+  })
+}
 
+// List each repo name by targeting repo.name
+// Link each repo by using the links at repo.full_name
 
-// Pull the avatar img src from data.items[0].avatar_url
-// Pull the username from data.items[0].login
 
 // document.getElementById('github-form').getElementsByTagName('button').addEventListener('submit', e => {
 //   console.log('I was clicked')
