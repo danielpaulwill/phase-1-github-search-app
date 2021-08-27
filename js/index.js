@@ -7,6 +7,7 @@
 
 document.addEventListener('DOMContentLoaded', e => {
   let submitButton = document.getElementsByTagName('input')[1];
+  additionalButton()
   submitButton.addEventListener('click', e => {
     e.preventDefault()
     let input = document.querySelector('#search').value
@@ -60,6 +61,30 @@ function repoLister(data) {
     reposList.append(repoNameContainer)
   })
 }
+
+function additionalButton() {
+  let submitForm = document.getElementById('github-form')
+  let bonusButton = document.createElement('button')
+  bonusButton.innerText = 'Search by Repo'
+  bonusButton.id = "bonusButton"
+  bonusButton.addEventListener('click', e => {
+    e.preventDefault()
+    additionalButtonSwitch(bonusButton)
+    });
+
+  submitForm.append(bonusButton)
+};
+
+// THIS IS WHERE I LEFT OFF
+function additionalButtonSwitch(bonusButton) {
+  if (bonusButton.innerText === 'Search by Repo') {
+    bonusButton.innerText = 'Search by User'
+    return bonusButton.innerText
+  } else {
+    bonusButton.innerText = 'Search by Repo'
+  return bonusButton.innerText
+  }
+};
 
 // List each repo name by targeting repo.name
 // Link each repo by using the links at repo.full_name
