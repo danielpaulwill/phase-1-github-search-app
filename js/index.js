@@ -1,28 +1,29 @@
-// let submitButton = document.getElementById('github-form')
-
-// submitButton.addEventListener('submit', e => {
-//   e.preventDefault()
-//   console.log(e)
-// });
-
 document.addEventListener('DOMContentLoaded', e => {
   let submitButton = document.getElementsByTagName('input')[1];
   additionalButton()
   submitButton.addEventListener('click', e => {
     e.preventDefault()
+    if (bonusButton.innerText === "Search by Repo") {
     let input = document.querySelector('#search').value
     fetch(`https://api.github.com/search/users?q=${input}`)
     .then(res => res.json())
     .then(data => {
       data.items.forEach(user => cardMaker(user)
-      )
-    })
-  })
+      )})}
+    else if (bonusButton.innerText === 'Search by User') {
+      let userList = document.querySelector('#user-list')
+      let header = document.createElement('h3')
+      let uhOh = document.createElement('img')
+      uhOh.src = 'https://static.boredpanda.com/blog/wp-content/uploads/2021/06/CP3Ss7PDbim-1-png__700.jpg'
+      header.innerText = "I couldn't figure out how to grab the Repos"
+      userList.append(header)
+      userList.append(uhOh)
+    }
+})
 });
 
 function cardMaker(user) {
   let userList = document.querySelector('#user-list')
-
   let userItem = document.createElement('li')
   userItem.id = `${user.login}`
   userItem.style.borderStyle = 'solid'
